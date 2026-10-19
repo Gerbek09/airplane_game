@@ -31,18 +31,16 @@ jobs:
           pip install buildozer
           pip install "cython<3.0"
 
-      - name: First run to download SDK (will fail, that's OK)
-        run: |
-          yes | buildozer -v android debug || true
-
-      - name: Create symlink for sdkmanager
-        run: |
-          mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
-          ln -sf ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
-          ls -la ~/.buildozer/android/platform/android-sdk/tools/bin/
-
       - name: Build with Buildozer
         run: |
+          # 1. Первый запуск — качает SDK и падает (это OK)
+          yes | buildozer -v android debug || true
+
+          # 2. Создаём ссылку, пока папка .buildozer ещё на месте
+          mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
+          ln -sf ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
+
+          # 3. Второй запуск — должен пройти
           yes | buildozer -v android debug
 
       - name: Upload APK

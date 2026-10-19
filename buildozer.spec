@@ -9,7 +9,7 @@ source.include_exts = py,png,jpg,kv,atlas
 
 version = 0.1
 
-requirements = python3,kivy==2.3.1,pyjnius,android
+requirements = python3==3.11.5,hostpython3==3.11.5,kivy==2.3.1,pyjnius,android
 
 orientation = portrait
 fullscreen = 1
@@ -32,3 +32,5 @@ android.accept_sdk_license = True
 # --- Python for Android ---
 p4a.branch = master
 p4a.bootstrap = sdl2
+# --- Принудительный Python 3.11 ---
+p4a.local_recipes = 

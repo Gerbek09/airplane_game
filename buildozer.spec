@@ -6,7 +6,9 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 0.1
 
-requirements = python3==3.11.5, hostpython3==3.11.5, kivy==2.3.1
+# КРИТИЧНО: Фиксируем Python и Kivy, чтобы не тянуло 3.14
+# Используем версии, которые точно есть в p4a
+requirements = python3==3.11.5, hostpython3==3.11.5, kivy==2.3.1, pyjnius
 
 orientation = portrait
 fullscreen = 1

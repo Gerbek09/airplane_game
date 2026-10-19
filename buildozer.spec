@@ -20,7 +20,6 @@ android.minapi = 21
 android.ndk = 23b
 android.archs = arm64-v8a, armeabi-v7a
 android.permissions = INTERNET, ACCESS_NETWORK_STATE
-android.accept_sdk_license = True
 
 # --- Python for Android ---
 p4a.branch = master

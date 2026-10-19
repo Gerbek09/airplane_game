@@ -31,10 +31,15 @@ jobs:
           pip install buildozer
           pip install "cython<3.0"
 
+      - name: First run to download SDK (will fail, that's OK)
+        run: |
+          yes | buildozer -v android debug || true
+
       - name: Create symlink for sdkmanager
         run: |
           mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
-          ln -s ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
+          ln -sf ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
+          ls -la ~/.buildozer/android/platform/android-sdk/tools/bin/
 
       - name: Build with Buildozer
         run: |

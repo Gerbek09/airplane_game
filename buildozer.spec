@@ -30,7 +30,5 @@ android.permissions = INTERNET, ACCESS_NETWORK_STATE
 android.accept_sdk_license = True
 
 # --- Python for Android ---
-p4a.branch = master
 p4a.bootstrap = sdl2
 # --- Принудительный Python 3.11 ---
-p4a.local_recipes = 

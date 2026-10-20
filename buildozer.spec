@@ -8,7 +8,7 @@ version = 0.1
 
 # КРИТИЧНО: Фиксируем Python 3.11, чтобы не тянуло 3.14
 # Убрали pyjnius из списка, чтобы p4a собрал его сам через свой рецепт
-requirements = python3==3.11.5, hostpython3==3.11.5, kivy==2.3.1
+requirements = python3==3.11.5, hostpython3==3.11.5, kivy==2.3.1, pyjnius==1.6.1
 
 orientation = portrait
 fullscreen = 1

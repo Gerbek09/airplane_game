@@ -7,18 +7,42 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build APK in Docker
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
         run: |
-          # Запускаем Docker, монтируем папку и выполняем сборку
-          docker run --rm \
-            -v ${{ github.workspace }}:/home/user/hostcwd \
-            kivy/buildozer:latest \
-            /bin/bash -c "cd /home/user/hostcwd && yes | buildozer -v android debug"
+          sudo apt update
+          sudo apt install -y git zip unzip openjdk-17-jdk \
+            autoconf libtool pkg-config zlib1g-dev libncurses5-dev \
+            libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev \
+            automake autopoint gettext
+
+      - name: Install pip packages
+        run: |
+          # ОТКАТ pip до версии, которая понимает флаги p4a
+          python -m pip install --upgrade pip==23.3.2
+          pip install buildozer
+          pip install "cython<3.0"
+
+      - name: Build with Buildozer
+        run: |
+          # Первый запуск (скачает SDK/NDK и упадет на лицензии sdkmanager)
+          yes | buildozer -v android debug || true
+
+          # Создаем ссылку, чтобы Buildozer нашел sdkmanager
+          mkdir -p ~/.buildozer/android/platform/android-sdk/tools/bin
+          ln -sf ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager
+
+          # Второй запуск (должен пройти дальше)
+          yes | buildozer -v android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
